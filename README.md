@@ -1,7 +1,7 @@
 # Go-Basics
 
 
-- Build-A-Web-Server
+- Build A Web Server
   
-- Build-A-CRUD-API
+- Build A CRUD API
 
