@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"github.com/vitalvirtue/Go-Basics/Build-A-CRUD-API/models"
+	"github.com/vitalvirtue/advanced-golang/Build-A-CRUD-API/models"
 	"github.com/gorilla/mux"
 	"strconv"
 )

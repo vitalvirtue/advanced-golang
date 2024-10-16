@@ -1,4 +1,4 @@
-module github.com/vitalvirtue/Go-Basics/Build-A-CRUD-API
+module github.com/vitalvirtue/advanced-golang/Build-A-CRUD-API
 
 go 1.22.0
 

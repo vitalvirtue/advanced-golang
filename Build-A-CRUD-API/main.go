@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"github.com/vitalvirtue/Go-Basics/Build-A-CRUD-API/routers"
+	"github.com/vitalvirtue/advanced-golang/Build-A-CRUD-API/routers"
 )
 
 func main() {
