@@ -21,4 +21,4 @@
 
 10. Go and gRPC
 
-11. Go and Kafka
+11. Go and Kafka - Event Driven Programming
