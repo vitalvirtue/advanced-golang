@@ -4,16 +4,36 @@ import (
     "context"
     "github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/models"
     "github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/pkg/db"
+    "github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/pkg/types"
+    "time"
+    "log"
+
+    "go.mongodb.org/mongo-driver/bson/primitive"
     "go.mongodb.org/mongo-driver/bson"
     "go.mongodb.org/mongo-driver/mongo"
-    "time"
+    
 )
 
-func CreateEmployee(employee models.Employee) (*mongo.InsertOneResult, error) {
+func CreateEmployee(req types.CreateEmployeeRequest) (*mongo.InsertOneResult, error) {
     ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
     defer cancel()
-    return db.EmployeeCollection.InsertOne(ctx, employee)
+
+    employee := models.Employee{
+        ID:        primitive.NewObjectID(), 
+        FirstName: req.FirstName,
+        LastName:  req.LastName,
+        Position:  req.Position,
+        Salary:    req.Salary,
+    }
+
+    result, err := db.EmployeeCollection.InsertOne(ctx, employee)
+    if err != nil {
+        log.Printf("Error creating employee: %v", err)
+        return nil, err
+    }
+    return result, nil
 }
+
 
 func GetAllEmployees() ([]models.Employee, error) {
     var employees []models.Employee

@@ -2,22 +2,28 @@ package controllers
 
 import (
     "github.com/gofiber/fiber/v2"
-    "github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/models"
     "github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/pkg/services"
+    "github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/pkg/types"
 )
 
 func CreateEmployee(c *fiber.Ctx) error {
-    var employee models.Employee
-    if err := c.BodyParser(&employee); err != nil {
-        return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON"})
+    var req types.CreateEmployeeRequest
+
+    if err := c.BodyParser(&req); err != nil {
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+            "error": "Invalid request payload",
+        })
     }
 
-    result, err := services.CreateEmployee(employee)
+    // Employee oluşturma işlemi
+    result, err := services.CreateEmployee(req)
     if err != nil {
-        return c.Status(500).JSON(fiber.Map{"error": "Failed to create employee"})
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": "Failed to create employee",
+        })
     }
 
-    return c.Status(201).JSON(result)
+    return c.Status(fiber.StatusCreated).JSON(result)
 }
 
 func GetEmployees(c *fiber.Ctx) error {
