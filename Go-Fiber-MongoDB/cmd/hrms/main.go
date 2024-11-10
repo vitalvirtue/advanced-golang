@@ -4,15 +4,21 @@ import (
 	"log"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
-	"github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/"
 	"github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/pkg/db"
-	"github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/internals/routes"
+	"github.com/vitalvirtue/advanced-golang/Go-Fiber-MongoDB/internal/routes"
 )
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		Log.Fatal("Error loading .env file")
+		log.Fatal("Error loading .env file")
 	}
 
-	
+	db.ConnectDB()
+	db.InitCollections()
+
+	app := fiber.New()
+
+	routes.SetupRoutes(app)
+
+	log.Fatal(app.Listen(":3000"))
 }
