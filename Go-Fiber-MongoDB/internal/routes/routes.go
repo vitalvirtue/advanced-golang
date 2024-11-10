@@ -9,5 +9,8 @@ func SetupRoutes(app *fiber.App) {
     api := app.Group("/api")
 
     api.Post("/employees", controllers.CreateEmployee)
-    api.Get("/employees", controllers.GetEmployees)
+    api.Get("/employees", controllers.GetAllEmployees)
+
+    api.Post("/departments", controllers.CreateDepartment)
+    api.Get("/departments", controllers.GetAllDepartments)
 }

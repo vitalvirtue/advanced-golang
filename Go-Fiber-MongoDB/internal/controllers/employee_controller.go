@@ -15,7 +15,6 @@ func CreateEmployee(c *fiber.Ctx) error {
         })
     }
 
-    // Employee oluşturma işlemi
     result, err := services.CreateEmployee(req)
     if err != nil {
         return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -26,7 +25,7 @@ func CreateEmployee(c *fiber.Ctx) error {
     return c.Status(fiber.StatusCreated).JSON(result)
 }
 
-func GetEmployees(c *fiber.Ctx) error {
+func GetAllEmployees(c *fiber.Ctx) error {
     employees, err := services.GetAllEmployees()
     if err != nil {
         return c.Status(500).JSON(fiber.Map{"error": "Failed to fetch employees"})

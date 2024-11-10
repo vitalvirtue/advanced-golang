@@ -7,7 +7,7 @@ type CreateEmployeeRequest struct {
     Salary    float64 `json:"salary"`
 }
 
-type EmployeeResponse struct {
+type CreateEmployeeResponse struct {
     ID        string  `json:"id"`
     FirstName string  `json:"first_name"`
     LastName  string  `json:"last_name"`

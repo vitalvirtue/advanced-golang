@@ -34,22 +34,33 @@ func CreateEmployee(req types.CreateEmployeeRequest) (*mongo.InsertOneResult, er
     return result, nil
 }
 
-
-func GetAllEmployees() ([]models.Employee, error) {
-    var employees []models.Employee
-    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+func GetAllEmployees() ([]types.CreateEmployeeResponse, error) {
+    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
     defer cancel()
 
+    var employeeResponses []types.CreateEmployeeResponse
     cursor, err := db.EmployeeCollection.Find(ctx, bson.M{})
     if err != nil {
-        return employees, err
+        log.Printf("Error fetching employees: %v", err)
+        return nil, err
     }
     defer cursor.Close(ctx)
 
     for cursor.Next(ctx) {
         var employee models.Employee
-        cursor.Decode(&employee)
-        employees = append(employees, employee)
+        if err := cursor.Decode(&employee); err != nil {
+            log.Printf("Error decoding employee: %v", err)
+            return nil, err
+        }
+
+        employeeResponses = append(employeeResponses, types.CreateEmployeeResponse{
+            ID:        employee.ID.Hex(),
+            FirstName: employee.FirstName,
+            LastName:  employee.LastName,
+            Position:  employee.Position,
+            Salary:    employee.Salary,
+        })
     }
-    return employees, nil
+
+    return employeeResponses, nil
 }
